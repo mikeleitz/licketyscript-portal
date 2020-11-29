@@ -23,6 +23,9 @@
           <div class="px-4 sm:px-0">
             <TopCta/>
           </div>
+          <div class="px-4 sm:px-0">
+            <FeatureSection/>
+          </div>
           <!-- /End replace -->
         </div>
       </main>
@@ -36,9 +39,11 @@
 import TopCta from "@/components/Home/TopCta";
 import NavBar from "@/components/NavBar";
 import MobileNav from "@/components/MobileNav";
+import FeatureSection from "@/components/Home/FeatureSection";
 export default {
   name: 'Portal',
   components: {
+    FeatureSection,
     MobileNav,
     NavBar,
     TopCta
