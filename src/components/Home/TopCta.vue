@@ -29,7 +29,7 @@
               <li class="text-lg leading-6 text-indigo-200">Declare input validations</li>
               <li class="text-lg leading-6 text-indigo-200">Download and implement logic</li>
             </ol>
-            <a href="#" class="mt-8 bg-white border border-transparent rounded-md shadow px-6 py-3 inline-flex items-center text-base font-medium text-indigo-600 hover:bg-indigo-50">Start scripting with ease</a>
+<!--            <a href="#" class="mt-8 bg-white border border-transparent rounded-md shadow px-6 py-3 inline-flex items-center text-base font-medium text-indigo-600 hover:bg-indigo-50">Start scripting with ease</a>-->
           </div>
         </div>
         <div class="-mt-6 aspect-w-5 aspect-h-3 md:aspect-w-2 md:aspect-h-1">

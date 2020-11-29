@@ -12,7 +12,7 @@
         Open: "block", closed: "hidden"
       -->
       <div class="hidden sm:hidden">
-        <MobileNav/>
+<!--        <MobileNav/>-->
       </div>
     </nav>
 
@@ -26,6 +26,9 @@
           <div class="px-4 sm:px-0">
             <FeatureSection/>
           </div>
+          <div class="px-4 sm:px-0">
+            <ScreenShots/>
+          </div>
           <!-- /End replace -->
         </div>
       </main>
@@ -38,13 +41,15 @@
 
 import TopCta from "@/components/Home/TopCta";
 import NavBar from "@/components/NavBar";
-import MobileNav from "@/components/MobileNav";
+// import MobileNav from "@/components/MobileNav";
 import FeatureSection from "@/components/Home/FeatureSection";
+import ScreenShots from "@/components/Home/ScreenShots";
 export default {
   name: 'Portal',
   components: {
+    ScreenShots,
     FeatureSection,
-    MobileNav,
+    // MobileNav,
     NavBar,
     TopCta
   }
