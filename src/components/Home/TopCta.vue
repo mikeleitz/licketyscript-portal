@@ -21,15 +21,19 @@
         <div class="pt-10 pb-12 px-6 sm:pt-16 sm:px-16 lg:py-16 lg:pr-0 xl:py-20 xl:px-20">
           <div class="lg:self-center">
             <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-              <span class="block">Ready to dive in?</span>
-              <span class="block">Start your free trial today.</span>
+              <span class="block">Ready for easier Bash Scripts?</span>
             </h2>
-            <p class="mt-4 text-lg leading-6 text-indigo-200">Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla nec.</p>
-            <a href="#" class="mt-8 bg-white border border-transparent rounded-md shadow px-6 py-3 inline-flex items-center text-base font-medium text-indigo-600 hover:bg-indigo-50">Sign up for free</a>
+            <p class="mt-4 text-lg leading-6 text-indigo-200">Use Lickety Script to bootstrap your Bash scripts in 3 easy steps.</p>
+            <ol class="list-decimal mt-4 ml-10">
+              <li class="text-lg leading-6 text-indigo-200">Specify input options</li>
+              <li class="text-lg leading-6 text-indigo-200">Declare input validations</li>
+              <li class="text-lg leading-6 text-indigo-200">Download and implement logic</li>
+            </ol>
+            <a href="#" class="mt-8 bg-white border border-transparent rounded-md shadow px-6 py-3 inline-flex items-center text-base font-medium text-indigo-600 hover:bg-indigo-50">Start scripting with ease</a>
           </div>
         </div>
         <div class="-mt-6 aspect-w-5 aspect-h-3 md:aspect-w-2 md:aspect-h-1">
-          <img class="transform translate-x-6 translate-y-6 rounded-md object-cover object-left-top sm:translate-x-16 lg:translate-y-20" src="https://tailwindui.com/img/component-images/full-width-with-sidebar.jpg" alt="App screenshot">
+          <img class="transform translate-x-6 translate-y-6 rounded-md object-cover object-left-top sm:translate-x-16 lg:translate-y-20" src="@/assets/screenshots/full-app-shot.png" alt="Lickety Script screenshot">
         </div>
       </div>
     </div>
