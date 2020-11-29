@@ -4,7 +4,7 @@ job("build and publish vuejs version of mikeleitz.com") {
             file = "./Dockerfile"
         }
 
-        push("leadtechnologist.registry.jetbrains.space/p/sws/static-website-containers/mikeleitz-vuejs") {
+        push("leadtechnologist.registry.jetbrains.space/p/lsc/leadtechnologist-containers/licketyscript-portal") {
             tag = "0.\$JB_SPACE_EXECUTION_NUMBER"
         }
 
