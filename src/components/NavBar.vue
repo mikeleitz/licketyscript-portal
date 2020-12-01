@@ -9,6 +9,11 @@
         <router-link class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" to="/">Home</router-link>
         <router-link class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" to="/about">About</router-link>
       </div>
+
+      <div class="flex-shrink-0 flex items-center ml-20">
+        <!-- TODO PUT APPLICATION ICON HERE -->
+        <h1 class="text-lg text-green-600">-- Coming Soon --</h1>
+      </div>
     </div>
 
     <div class="-mr-2 flex items-center sm:hidden">
