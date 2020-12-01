@@ -9,7 +9,7 @@
     <div>
       <main>
         <div class="py-16 max-w-7xl mx-auto sm:px-6 lg:px-8 overflow-hidden">
-          <div class="hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full">
+          <div class="hidden lg:block lg:absolute lg:h-full lg:w-full">
             <div class="relative h-full text-lg max-w-prose mx-auto" aria-hidden="true">
               <svg class="absolute top-12 left-full transform translate-x-32" width="404" height="384" fill="none"
                    viewBox="0 0 404 384">
