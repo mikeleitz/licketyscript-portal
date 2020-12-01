@@ -4,15 +4,6 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <NavBar/>
       </div>
-
-      <!--
-        Mobile menu, toggle classes based on menu state.
-
-        Open: "block", closed: "hidden"
-      -->
-      <div class="hidden sm:hidden">
-        <!--        <MobileNav/>-->
-      </div>
     </nav>
 
     <div>
