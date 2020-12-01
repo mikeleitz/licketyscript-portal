@@ -79,7 +79,7 @@
 import NavBar from "@/components/NavBar";
 
 export default {
-  name: 'Portal',
+  name: 'About',
   components: {
     NavBar,
   }
