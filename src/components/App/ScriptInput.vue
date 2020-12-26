@@ -176,7 +176,7 @@ export default {
 .expanded-section {
   width: 300px;
   height: 300px;
-  transition: width .5s, height .5s;
+  transition: width .5s, height .51s;
 }
 
 </style>
