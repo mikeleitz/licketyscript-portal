@@ -11,7 +11,8 @@
       <main>
         <div class="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
           <ScriptInformation/>
-
+        </div>
+        <div class="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
           <ScriptInput/>
         </div>
       </main>
