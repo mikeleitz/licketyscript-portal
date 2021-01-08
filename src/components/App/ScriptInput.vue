@@ -14,15 +14,24 @@
                   Script args
                 </label>
                 <div class="mt-2 flex items-center space-x-5">
-                    <select id="args" name="country" autocomplete="country" class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-                      <option>United States</option>
-                      <option>Canada</option>
-                      <option>Mexico</option>
-                    </select>
-                  <button type="button" class="bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+
+                  <select v-model="selected"
+                          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                  >
+                    <option v-for="option in options"
+                            v-bind:key="option.id"
+                            v-bind:value="option.id">
+                      {{ option.value }}
+                    </option>
+                  </select>
+                  <span>Selected id: {{ selected }}</span>
+
+                  <button type="button" @click="addScriptArg"
+                          class="bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Add
                   </button>
-                  <button type="button" class="bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <button type="button" @click="removeScriptArg"
+                          class="bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Remove
                   </button>
                 </div>
@@ -41,7 +50,32 @@ export default {
   name: "ScriptInput",
   data() {
     return {
-      showButton: true
+      showButton: true,
+      id: -1,
+      selected: '1',
+      options: [
+        { id: 1, text: 'One', value: 'A' },
+        { id: 2, text: 'Two', value: 'B' },
+        { id: 3, text: 'Three', value: 'C' }
+      ]
+    }
+  },
+  methods: {
+    addScriptArg: function () {
+      console.info("hello from add.")
+      this.options.unshift({id: 4, text: 'Four', value: 'D'})
+    },
+    removeScriptArg: function () {
+      let id = this.selected
+      console.info("hello from remove with id " + id)
+      let optionIndex = this.options.findIndex(arrayOption => arrayOption.id === id)
+      this.options.splice(optionIndex, 1)
+      this.selected = this.options[0].id
+    }
+  },
+  watch: {
+    selected: function (val, oldVal) {
+      console.info('old val: ' + oldVal + '; new val: ' + val)
     }
   }
 }
