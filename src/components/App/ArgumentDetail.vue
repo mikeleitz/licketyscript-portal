@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+  <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6" style="height: 575px;">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Script Argument Detail</h3>
