@@ -13,10 +13,13 @@
               </p>
             </div>
             <!-- On: "bg-teal-500", Off: "bg-gray-200" -->
-            <button type="button" aria-pressed="true" aria-labelledby="required-option-label" aria-describedby="required-option-description" class="ml-4 bg-gray-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-blue-500">
+            <button type="button" aria-pressed="true" aria-labelledby="required-option-label" aria-describedby="required-option-description"
+                    :class="isRequired ? buttonToggledClass : buttonNotToggledClass"
+                    @click="clickRequiredButton()">
               <span class="sr-only">Use setting</span>
               <!-- On: "translate-x-5", Off: "translate-x-0" -->
-              <span aria-hidden="true" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"></span>
+              <span aria-hidden="true"
+                    :class="isRequired ? spanToggledClass : spanNotToggledClass"></span>
             </button>
           </li>
 
@@ -30,10 +33,13 @@
               </p>
             </div>
             <!-- On: "bg-teal-500", Off: "bg-gray-200" -->
-            <button type="button" aria-pressed="true" aria-labelledby="integer-option-label" aria-describedby="integer-option-description" class="ml-4 bg-gray-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-blue-500">
+            <button type="button" aria-pressed="true" aria-labelledby="integer-option-label" aria-describedby="integer-option-description"
+                    :class="isInteger ? buttonToggledClass : buttonNotToggledClass"
+                    @click="clickIntegerButton()">
               <span class="sr-only">Use setting</span>
               <!-- On: "translate-x-5", Off: "translate-x-0" -->
-              <span aria-hidden="true" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"></span>
+              <span aria-hidden="true"
+                    :class="isInteger ? spanToggledClass : spanNotToggledClass"></span>
             </button>
           </li>
 
@@ -47,10 +53,13 @@
               </p>
             </div>
             <!-- On: "bg-teal-500", Off: "bg-gray-200" -->
-            <button type="button" aria-pressed="true" aria-labelledby="signed-option-label" aria-describedby="signed-option-description" class="ml-4 bg-gray-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-blue-500">
+            <button type="button" aria-pressed="true" aria-labelledby="signed-option-label" aria-describedby="signed-option-description"
+                    :class="isSigned ? buttonToggledClass : buttonNotToggledClass"
+                    @click="clickSignedButton()">
               <span class="sr-only">Use setting</span>
               <!-- On: "translate-x-5", Off: "translate-x-0" -->
-              <span aria-hidden="true" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"></span>
+              <span aria-hidden="true"
+                    :class="isSigned ? spanToggledClass : spanNotToggledClass"></span>
             </button>
           </li>
 
@@ -90,7 +99,44 @@
 
 <script>
 export default {
-  name: "InputTypeNumber"
+  name: "InputTypeNumber",
+  data() {
+    return {
+      buttonToggledClass: "ml-4 bg-purple-600 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-blue-500",
+      buttonNotToggledClass: "ml-4 bg-gray-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-blue-500",
+      spanToggledClass: "translate-x-5 inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200",
+      spanNotToggledClass: "translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200",
+      isRequired: false,
+      isInteger: false,
+      isSigned: false
+    }
+  },
+  methods: {
+    clickRequiredButton: function () {
+
+      if (this.isRequired) {
+        this.isRequired = false
+      } else {
+        this.isRequired = true
+      }
+    },
+    clickIntegerButton: function () {
+
+      if (this.isInteger) {
+        this.isInteger = false
+      } else {
+        this.isInteger = true
+      }
+    },
+    clickSignedButton: function () {
+
+      if (this.isSigned) {
+        this.isSigned = false
+      } else {
+        this.isSigned = true
+      }
+    },
+  }
 }
 </script>
 
