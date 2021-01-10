@@ -15,6 +15,9 @@
         <div class="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
           <ScriptInput/>
         </div>
+        <div class="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <ArgumentDetail/>
+        </div>
       </main>
     </div>
   </div>
@@ -24,10 +27,11 @@
 import NavBar from "@/components/NavBar";
 import ScriptInput from "@/components/App/ScriptInput";
 import ScriptInformation from "@/components/App/ScriptInformation";
+import ArgumentDetail from "@/components/App/ArgumentDetail";
 
 export default {
   name: "LicketyScriptApp",
-  components: {ScriptInformation, ScriptInput, NavBar}
+  components: {ArgumentDetail, ScriptInformation, ScriptInput, NavBar}
 }
 </script>
 
