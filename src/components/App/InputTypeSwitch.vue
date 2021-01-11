@@ -45,6 +45,21 @@ export default {
       isRequired: false
     }
   },
+  props: {
+    // Script input id for this type component.
+    id: {
+      required: false,
+      type: Number,
+      default: -1
+    },
+    bashOption: {
+      required: false,
+      type: Object
+    }
+  },
+  created () {
+    this.thisScriptInput = this.bashOption
+  },
   methods: {
     clickRequiredButton: function () {
 

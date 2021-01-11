@@ -45,24 +45,35 @@
 </template>
 
 <script>
+import ScriptInputTypeMixin from './mixins/ScriptInputTypeMixin.js'
+import { DomainFactory } from '../../domain/LicketyScriptDomainFactory'
+import { store } from '../../store'
+
 export default {
   name: "ScriptInput",
+  mixins: [ScriptInputTypeMixin],
   data() {
     return {
       showButton: true,
       id: -1,
-      selected: '1',
       options: [
-        { id: 1, text: 'One', value: 'A' },
-        { id: 2, text: 'Two', value: 'B' },
-        { id: 3, text: 'Three', value: 'C' }
+        { id: 1, value: 'A' },
+        { id: 2, value: 'B' },
+        { id: 3, value: 'C' }
       ]
     }
   },
   methods: {
     addScriptArg: function () {
       console.info("hello from add.")
-      this.options.unshift({id: 4, text: 'Four', value: 'D'})
+      let newOptionId = store.getNextOptionId()
+
+      let newBashOption = DomainFactory.createBashOption(newOptionId, 'NEW OPTION', null)
+      this.scriptInProgress.addOption(newBashOption)
+
+      console.info('Created new option: ' + newBashOption + ' with id: ' + newBashOption.id)
+
+      this.options.unshift({ id: newBashOption.id, value: newBashOption.longName })
     },
     removeScriptArg: function () {
       let id = this.selected
@@ -70,11 +81,6 @@ export default {
       let optionIndex = this.options.findIndex(arrayOption => arrayOption.id === id)
       this.options.splice(optionIndex, 1)
       this.selected = this.options[0].id
-    }
-  },
-  watch: {
-    selected: function (val, oldVal) {
-      console.info('old val: ' + oldVal + '; new val: ' + val)
     }
   }
 }

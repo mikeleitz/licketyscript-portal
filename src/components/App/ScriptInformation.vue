@@ -12,7 +12,10 @@
           <div class="grid grid-cols-3 gap-6">
             <div class="col-span-6 sm:col-span-3">
               <label for="ls-script-name" class="block text-sm font-medium text-gray-700">Script name</label>
-              <input type="text" name="ls_script_name" id="ls-script-name"
+              <input type="text"
+                     name="ls_script_name"
+                     id="ls-script-name"
+                     v-model="scriptInProgress.scriptName"
                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
             </div>
           </div>
@@ -36,8 +39,15 @@
 </template>
 
 <script>
+import { store } from '../../store.js'
+
 export default {
-  name: "ScriptInformation"
+  name: "ScriptInformation",
+  data() {
+    return {
+      scriptInProgress: store.state.scriptInProgress
+    }
+  }
 }
 </script>
 

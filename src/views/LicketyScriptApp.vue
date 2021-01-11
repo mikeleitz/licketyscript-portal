@@ -33,6 +33,8 @@ import ScriptInformation from "@/components/App/ScriptInformation";
 import ArgumentDetail from "@/components/App/ArgumentDetail";
 import CreateScript from "@/components/App/CreateScript";
 
+// import { store } from '../store.js'
+
 export default {
   name: "LicketyScriptApp",
   components: {CreateScript, ArgumentDetail, ScriptInformation, ScriptInput, NavBar}

@@ -223,7 +223,7 @@ export const DomainFactory = {
       return JSON.stringify(this)
     }
   },
-  createBashScript: function (pId = undefined, pScriptName = '', pShellType = 'BASH') {
+  createBashScript: function (pId = undefined, pScriptName = 'asdasd123', pShellType = 'BASH') {
     let bashScript = new BashScript(pId, pScriptName, pShellType)
     this.addCommonMethods(bashScript)
 

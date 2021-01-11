@@ -170,6 +170,21 @@ export default {
       selectedValidation: "no_restrictions"
     }
   },
+  props: {
+    // Script input id for this type component.
+    id: {
+      required: false,
+      type: Number,
+      default: -1
+    },
+    bashOption: {
+      required: false,
+      type: Object
+    }
+  },
+  created () {
+    this.thisScriptInput = this.bashOption
+  },
   methods: {
     clickRequiredButton: function () {
       if (this.isRequired) {

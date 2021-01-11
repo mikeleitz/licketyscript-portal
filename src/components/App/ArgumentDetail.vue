@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6" style="height: 575px;">
+  <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6" style="height: 775px;">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Script Argument Detail</h3>
@@ -9,9 +9,38 @@
         <form class="space-y-6" action="#" method="POST">
           <fieldset>
             <div>
-              <div class="space-y-1.5">
-                <label for="button_row" class="block text-sm font-medium text-gray-700">
-                  Argument Type
+              <div class="mt-6 grid grid-cols-12 gap-6">
+                <div class="col-span-12 sm:col-span-6">
+                  <label for="long_name" class="block text-sm font-medium text-gray-700">Long name</label>
+                  <input type="text"
+                         name="long_name"
+                         id="long_name"
+                         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm"
+                         v-model="thisScriptInput.longName">
+                </div>
+
+                <div class="col-span-3">
+                  <label for="short_name" class="block text-sm font-medium text-gray-700">Short name</label>
+                  <input type="text"
+                         name="short_name"
+                         id="short_name"
+                         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm"
+                         v-model="thisScriptInput.shortName">
+                </div>
+
+                <div class="col-span-12">
+                  <label for="help_text" class="block text-sm font-medium text-gray-700">Help Text</label>
+                  <input type="text"
+                         name="help_text"
+                         id="help_text"
+                         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm"
+                         v-model="thisScriptInput.helpText">
+                </div>
+              </div>
+
+              <div class="space-y-1.5 mt-4">
+                <label for="button_row" class=" mb-4 block text-sm font-medium text-gray-700">
+                  Argument Type and Validations
                 </label>
                 <!-- This example requires Tailwind CSS v2.0+ -->
                 <span id="button_row" class="relative z-0 inline-flex shadow-sm rounded-md">
@@ -60,8 +89,12 @@ import InputTypeNumber from "@/components/App/InputTypeNumber";
 import InputTypeOther from "@/components/App/InputTypeOther";
 import InputTypeSwitch from "@/components/App/InputTypeSwitch";
 
+// import { store } from '../../store.js'
+import ScriptInputTypeMixin from './mixins/ScriptInputTypeMixin.js'
+
 export default {
   name: "ArgumentDetail",
+  mixins: [ScriptInputTypeMixin],
   components: {InputTypeSwitch, InputTypeOther, InputTypeNumber, InputTypeString},
   data() {
     return {
@@ -76,10 +109,10 @@ export default {
       generalButtonSelectedClass: "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 bg-light-blue-500 hover:bg-light-blue-600  text-white     focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-blue-500",
       generalButtonNotSelectedClass: "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 bg-white hover:bg-gray-50         text-gray-700",
 
-      showString: false,
+      showString: true,
       showNumber: false,
       showSwitch: false,
-      showOther: false,
+      showOther: false
     }
   },
   methods: {
@@ -91,15 +124,19 @@ export default {
 
       if (type === 'string') {
         this.showString = true
+        this.thisScriptInput.type = 'string'
       } else if (type === 'number') {
+        this.thisScriptInput.type = 'number'
         this.showNumber = true
       } else if (type === 'switch') {
         this.showSwitch = true
+        this.thisScriptInput.type = 'boolean'
       } else if (type === 'other') {
         this.showOther = true
+        this.thisScriptInput.type = 'other'
       }
-
     }
+
   }
 }
 </script>
