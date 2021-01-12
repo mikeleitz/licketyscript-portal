@@ -28,14 +28,12 @@ export default {
             storeState: store.state,
             scriptInProgress: store.state.scriptInProgress,
             thisScriptInput: null,
-            selected: '',
         }
     },
     watch: {
-        selected: function (val, oldVal) {
+        selectedBashOption: function (val, oldVal) {
             console.info('old val: ' + oldVal + '; new val: ' + val)
-            console.info('script in progress: ' + this.scriptInProgress)
-            console.info('Arg: ' + this.scriptInProgress.getOptionIndex(1))
+            // this.selectedBashOption = val
         }
     }
 }
