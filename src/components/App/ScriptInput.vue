@@ -57,9 +57,6 @@ export default {
       showButton: true,
       id: -1,
       options: [
-        { id: 1, value: 'A' },
-        { id: 2, value: 'B' },
-        { id: 3, value: 'C' }
       ]
     }
   },
