@@ -28,12 +28,45 @@ export default {
             storeState: store.state,
             scriptInProgress: store.state.scriptInProgress,
             thisScriptInput: null,
+            selectedBashOptionId: '',
+            showArgDetail: false,
+            longName: '',
+            shortName: '',
+            helpText: ''
         }
     },
     watch: {
-        selectedBashOption: function (val, oldVal) {
-            console.info('old val: ' + oldVal + '; new val: ' + val)
-            // this.selectedBashOption = val
-        }
+        selectedBashOptionId: function (val, oldVal) {
+            console.info('Selecting new bash option. old bash option id: ' + oldVal + '; new bash option id: ' + val)
+            let bashOption = this.scriptInProgress.getOptionById(this.selectedBashOptionId)
+            this.thisScriptInput = bashOption
+
+            this.longName ='zxc'
+            this.shortName='zxc'
+            this.helpText='zxc'
+
+            if (bashOption != null) {
+                console.info('Showing arg detail')
+                this.showArgDetail = true
+            }
+        },
+        longName: function(val) {
+            console.info('new longname ' + val)
+            if (this.thisScriptInput != null) {
+                this.thisScriptInput.longName = val
+            }
+        },
+        shortName: function(val) {
+            console.info('new shortname ' + val)
+            if (this.thisScriptInput != null) {
+                this.thisScriptInput.shortName = val
+            }
+        },
+        helpText: function(val) {
+            console.info('new help text ' + val)
+            if (this.thisScriptInput != null) {
+                this.thisScriptInput.helpText = val
+            }
+        },
     }
 }

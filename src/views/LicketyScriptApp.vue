@@ -15,8 +15,8 @@
         <div class="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
           <ScriptInput/>
         </div>
-        <div class="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8 mb-10" >
-          <ArgumentDetail v-if="this.thisScriptInput != null"/>
+        <div class="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8 mb-10">
+          <ArgumentDetail/>
         </div>
         <div class="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8 mb-10" >
           <CreateScript/>
@@ -39,7 +39,12 @@ import ScriptInputTypeMixin from '../components/App/mixins/ScriptInputTypeMixin'
 export default {
   name: "LicketyScriptApp",
   components: {CreateScript, ArgumentDetail, ScriptInformation, ScriptInput, NavBar},
-  mixins: [ScriptInputTypeMixin]
+  mixins: [ScriptInputTypeMixin],
+  data() {
+    return {
+      loginType: 'username'
+    }
+  }
 }
 </script>
 

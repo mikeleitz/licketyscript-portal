@@ -1,4 +1,4 @@
-<template>
+<template >
   <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6" style="height: 775px;">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
@@ -16,7 +16,7 @@
                          name="long_name"
                          id="long_name"
                          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm"
-                         v-model="thisScriptInput.longName">
+                         v-model="longName">
                 </div>
 
                 <div class="col-span-3">
@@ -25,7 +25,7 @@
                          name="short_name"
                          id="short_name"
                          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm"
-                         v-model="thisScriptInput.shortName">
+                         v-model="shortName">
                 </div>
 
                 <div class="col-span-12">
@@ -34,7 +34,7 @@
                          name="help_text"
                          id="help_text"
                          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm"
-                         v-model="thisScriptInput.helpText">
+                         v-model="helpText">
                 </div>
               </div>
 
@@ -114,6 +114,12 @@ export default {
       showSwitch: false,
       showOther: false
     }
+  },
+  created() {
+    console.info('CREATING ARG DETAIL.')
+  },
+  watch: {
+
   },
   methods: {
     clickTypeButton: function (type) {
