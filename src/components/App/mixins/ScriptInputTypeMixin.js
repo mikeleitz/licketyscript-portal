@@ -28,7 +28,7 @@ export default {
             storeState: store.state,
             scriptInProgress: store.state.scriptInProgress,
             thisScriptInput: null,
-            selected: '1',
+            selected: '',
         }
     },
     watch: {
