@@ -27,21 +27,11 @@
 
                   <span>Selected id: {{ selectedBashOption != '' ? selectedBashOption : 'N/A' }}</span>
 
-<!--                  <select v-model="this.selected"
-                          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-                    <option v-for="option in bashOptions"
-                            v-bind:key="option.id"
-                            v-bind:value="option.id">
-                      {{ option.value }}
-                    </option>
-                  </select>-->
-<!--                  <span v-if="this.selected != null">Selected id: {{ this.selected != null ? this.selected.id : '' }}</span>-->
-
                   <button type="button" @click="addScriptArg"
                           class="bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Add
                   </button>
-                  <button type="button" @click="removeScriptArg"
+                  <button type="button" @click="removeScriptArg" :disabled="selectedBashOption === ''"
                           class="bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Remove
                   </button>
@@ -84,11 +74,18 @@ export default {
       this.bashOptions.unshift({ id: newBashOption.id, value: newBashOption.longName })
     },
     removeScriptArg: function () {
-      let id = this.selected
-      console.info("hello from remove with id " + id)
-      let optionIndex = this.bashOptions.findIndex(arrayOption => arrayOption.id === id)
-      this.bashOptions.splice(optionIndex, 1)
-      // this.selected = this.bashOptions[0].id
+      if (this.selectedBashOption != null && this.selectedBashOption != '') {
+        let id = this.selectedBashOption;
+        console.info("hello from remove with id " + id)
+        let optionIndex = this.bashOptions.findIndex(arrayOption => arrayOption.id === id)
+        this.bashOptions.splice(optionIndex, 1)
+
+        if (this.bashOptions.length > 0) {
+          this.selectedBashOption = this.bashOptions[0].id
+        } else {
+          this.selectedBashOption = ''
+        }
+      }
     }
   }
 }
