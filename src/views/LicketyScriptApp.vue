@@ -15,9 +15,6 @@
         <div class="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
           <ScriptInput/>
         </div>
-        <div class="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8 mb-10">
-          <ArgumentDetail/>
-        </div>
         <div class="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8 mb-10" >
           <CreateScript/>
         </div>
@@ -30,7 +27,6 @@
 import NavBar from "@/components/NavBar";
 import ScriptInput from "@/components/App/ScriptInput";
 import ScriptInformation from "@/components/App/ScriptInformation";
-import ArgumentDetail from "@/components/App/ArgumentDetail";
 import CreateScript from "@/components/App/CreateScript";
 import ScriptInputTypeMixin from '../components/App/mixins/ScriptInputTypeMixin'
 
@@ -38,7 +34,7 @@ import ScriptInputTypeMixin from '../components/App/mixins/ScriptInputTypeMixin'
 
 export default {
   name: "LicketyScriptApp",
-  components: {CreateScript, ArgumentDetail, ScriptInformation, ScriptInput, NavBar},
+  components: {CreateScript, ScriptInformation, ScriptInput, NavBar},
   mixins: [ScriptInputTypeMixin],
   data() {
     return {
