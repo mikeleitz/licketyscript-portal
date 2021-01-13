@@ -38,7 +38,6 @@ export default {
   mixins: [ScriptInputTypeMixin],
   data() {
     return {
-      loginType: 'username'
     }
   }
 }
