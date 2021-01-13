@@ -51,7 +51,7 @@
             <h3 class="text-lg font-medium leading-6 text-gray-900">Script Argument Detail</h3>
             <p class="mt-1 text-sm text-gray-500">The argument detail.</p>
           </div>
-          <div class="mt-5 md:mt-0 md:col-span-2">
+          <div class="mt-5 md:mt-0 md:col-span-2" v-show="showArgDetail">
             <form class="space-y-6" action="#" method="POST">
               <fieldset>
                 <div>
@@ -113,9 +113,6 @@
                 </span>
                   </div>
                   <div>
-                    <!--                We show this: <my-comp></my-comp>-->
-                    <!--                We don't show this: <my-comp test="0"></my-comp>-->
-
                     <InputTypeString v-if="showString"/>
                     <InputTypeNumber v-if="showNumber"/>
                     <InputTypeSwitch v-if="showSwitch"/>
@@ -124,6 +121,10 @@
                 </div>
               </fieldset>
             </form>
+          </div>
+
+          <div class="mt-5 md:mt-0 md:col-span-2" v-show="!showArgDetail">
+            Add new bash option to edit detail
           </div>
         </div>
       </div>
@@ -149,7 +150,8 @@ export default {
       showButton: true,
       id: -1,
       bashOptions: [],
-// Button on far left has rounded edges on left
+
+      // Button on far left has rounded edges on left
       stringButtonSelectedClass: "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 bg-light-blue-500 hover:bg-light-blue-600  text-white     rounded-l-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-blue-500",
       stringButtonNotSelectedClass: "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 bg-white  rounded-l-md        hover:bg-gray-50         text-gray-700",
 
@@ -178,9 +180,9 @@ export default {
       let bashOption = this.scriptInProgress.getOptionById(this.selectedBashOptionId)
       this.thisScriptInput = bashOption
 
-      this.longName = 'zxc'
-      this.shortName = 'zxc'
-      this.helpText = 'zxc'
+      this.longName = bashOption.longName
+      this.shortName = bashOption.shortName
+      this.helpText = bashOption.helpText
 
       if (bashOption != null) {
         console.info('Showing arg detail')
