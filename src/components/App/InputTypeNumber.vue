@@ -5,26 +5,6 @@
         <ul class="mt-2 divide-y divide-gray-200">
           <li class="py-4 flex items-center justify-between">
             <div class="flex flex-col">
-              <p id="required-option-label" class="text-sm font-medium text-gray-900">
-                Required
-              </p>
-              <p id="required-option-description" class="text-sm text-gray-500">
-                Is this value a required input.
-              </p>
-            </div>
-            <!-- On: "bg-teal-500", Off: "bg-gray-200" -->
-            <button type="button" aria-pressed="true" aria-labelledby="required-option-label" aria-describedby="required-option-description"
-                    :class="isRequired ? buttonToggledClass : buttonNotToggledClass"
-                    @click="clickRequiredButton()">
-              <span class="sr-only">Use setting</span>
-              <!-- On: "translate-x-5", Off: "translate-x-0" -->
-              <span aria-hidden="true"
-                    :class="isRequired ? spanToggledClass : spanNotToggledClass"></span>
-            </button>
-          </li>
-
-          <li class="py-4 flex items-center justify-between">
-            <div class="flex flex-col">
               <p id="integer-option-label" class="text-sm font-medium text-gray-900">
                 Is Integer
               </p>
