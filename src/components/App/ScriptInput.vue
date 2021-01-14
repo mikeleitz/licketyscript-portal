@@ -315,7 +315,10 @@
                                   The lowest possible value for this argument.
                                 </p>
                               </div>
-                              <input type="text" name="lower_bound_value" id="lower_bound_value"
+                              <input type="text"
+                                     name="lower_bound_value"
+                                     id="lower_bound_value"
+                                     v-model="lowerBound"
                                      class="ml-4 relative inline-flex flex-shrink-0 h-6 w-20 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md">
                             </li>
 
@@ -328,7 +331,10 @@
                                   The highest possible value for this argument.
                                 </p>
                               </div>
-                              <input type="text" name="upper_bound_value" id="upper_bound_value"
+                              <input type="text"
+                                     name="upper_bound_value"
+                                     id="upper_bound_value"
+                                     v-model="upperBound"
                                      class="ml-4 relative inline-flex flex-shrink-0 h-6 w-20 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md">
                             </li>
                           </ul>
@@ -420,6 +426,8 @@ export default {
       // Numeric validations
       isInteger: false,
       isSigned: false,
+      lowerBound: '',
+      upperBound: ''
     }
   },
   watch: {
@@ -433,6 +441,14 @@ export default {
         this.showArgDetail = true
         this.reloadValuesForSelectedArg()
       }
+    },
+    lowerBound: function(val) {
+      console.info("Setting new lower bound: " + val)
+      this.determineNumericValidations()
+    },
+    upperBound: function(val) {
+      console.info("Setting new upper bound: " + val)
+      this.determineNumericValidations()
     },
     longName: function (val) {
       console.info('new longname ' + val)
@@ -469,6 +485,8 @@ export default {
       } else if (newValidation === '9') {
         this.isUrlSelected = true
       }
+
+      this.determineStringValidations()
     }
   },
   methods: {
@@ -570,11 +588,30 @@ export default {
         this.selectedBashArg.type = 'other'
       }
     },
+    determineStringValidations: function() {
+      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.ALPHA_NUMERIC))
+      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.EMAIL))
+      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.URL))
+
+      if (this.isNoRestrictionsSelected) {
+        console.debug('No string restrictions selected.')
+      } else if (this.isAlphanumericSelected) {
+        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.ALPHA_NUMERIC))
+      } else if (this.isEmailAddressSelected) {
+        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.EMAIL))
+      } else if (this.isUrlSelected) {
+        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.URL))
+      }
+    },
     determineNumericValidations: function () {
       this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL))
       this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL))
       this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER))
       this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER))
+      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN))
+      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN_EQUAL))
+      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN))
+      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN_EQUAL))
 
       if (this.isInteger) {
         if (this.isSigned) {
@@ -588,6 +625,20 @@ export default {
         } else {
           this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER))
         }
+      }
+
+      if (this.lowerBound != '') {
+        let validation = DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN_EQUAL)
+        validation.addArgs('value', this.lowerBound)
+
+        this.selectedBashArg.addValidation(validation)
+      }
+
+      if (this.upperBound != '') {
+        let validation = DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN_EQUAL)
+        validation.addArgs('value', this.upperBound)
+
+        this.selectedBashArg.addValidation(validation)
       }
     },
     clickIntegerToggle: function () {
