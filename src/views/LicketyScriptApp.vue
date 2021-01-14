@@ -7,8 +7,16 @@
       </div>
     </nav>
 
+    <div v-if="loading" class="loading">
+      Loading...
+    </div>
+
+    <div v-if="generatorStatus !== 'Ready'" class="error">
+      The generator is not ready. Can not generate scripts. Status : {{ generatorStatus }}
+    </div>
+
     <div>
-      <main>
+      <main v-if="generatorStatus === 'Ready'" role="main">
         <div class="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
           <ScriptInformation/>
         </div>
@@ -31,6 +39,7 @@ import CreateScript from "@/components/App/CreateScript";
 import ScriptInputTypeMixin from '../components/App/mixins/ScriptInputTypeMixin'
 
 // import { store } from '../store.js'
+import axios from 'axios'
 
 export default {
   name: "LicketyScriptApp",
@@ -38,6 +47,30 @@ export default {
   mixins: [ScriptInputTypeMixin],
   data() {
     return {
+      generatorStatus: 'Not Ready',
+      loading: false
+    }
+  },
+  created () {
+    this.getStatus()
+  },
+  watch: {
+    // call the status method again if the route changes
+    '$route': 'getStatus'
+  },
+  methods: {
+    getStatus: function () {
+      this.loading = true
+      axios({
+        url: 'https://api.licketyscript.app/status',
+        method: 'GET'
+      }).then(result => {
+        this.generatorStatus = result.data.status
+        this.loading = false
+      }, error => {
+        console.error(error)
+        this.loading = false
+      })
     }
   }
 }
