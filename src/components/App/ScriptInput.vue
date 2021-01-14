@@ -118,29 +118,29 @@
                     <span id="button_row" class="relative z-0 inline-flex shadow-sm rounded-md">
                   <button type="button"
                           v-on:click="clickTypeButton('string')"
-                          :class="showString ? stringButtonSelectedClass : stringButtonNotSelectedClass">
+                          :class="isTypeString ? stringButtonSelectedClass : stringButtonNotSelectedClass">
                     String
                   </button>
                   <button type="button"
                           v-on:click="clickTypeButton('number')"
-                          :class="showNumber ? generalButtonSelectedClass : generalButtonNotSelectedClass">
+                          :class="isTypeNumber ? generalButtonSelectedClass : generalButtonNotSelectedClass">
                     Number
                   </button>
                   <button type="button"
                           v-on:click="clickTypeButton('switch')"
-                          :class="showSwitch ? generalButtonSelectedClass : generalButtonNotSelectedClass">
+                          :class="isTypeSwitch ? generalButtonSelectedClass : generalButtonNotSelectedClass">
                     Switch
                   </button>
                   <button type="button"
                           v-on:click="clickTypeButton('other')"
-                          :class="showOther ? otherButtonSelectedClass : otherButtonNotSelectedClass">
+                          :class="isTypeOther ? otherButtonSelectedClass : otherButtonNotSelectedClass">
                     Other
                   </button>
                 </span>
                   </div>
                   <div>
 
-                    <div v-show="showString">
+                    <div v-show="isTypeString">
                       <!-- String type -->
                       <div class="pt-6 divide-y divide-gray-200">
                         <fieldset>
@@ -256,7 +256,7 @@
                       </div>
                     </div>
 
-                    <div v-show="showNumber">
+                    <div v-show="isTypeNumber">
                       <!-- Numeric type -->
                       <div class="pt-6 divide-y divide-gray-200">
                         <fieldset>
@@ -393,58 +393,63 @@ export default {
       radioSpan2SelectedClass: "block text-sm text-light-blue-700",
       radioSpan2NotSelectedClass: "block text-sm text-gray-500",
 
+      // Arg drop down selection
+      selectedBashArg: null,
+      selectedBashOptionId: '',
+      showArgDetail: false,
+
+      // Should we show the arg detail? Only if a valid arg is selected in drop down.
+      longName: '',
+      shortName: '',
+      helpText: '',
+      isRequired: false,
+
+      // Type selections
+      isTypeString: true,
+      isTypeNumber: false,
+      isTypeOther: false,
+      isTypeSwitch: false,
+
+      // String validations
       isNoRestrictionsSelected: true,
       isAlphanumericSelected: false,
       isEmailAddressSelected: false,
       isUrlSelected: false,
       selectedValidation: "no_restrictions",
 
-      showString: true,
-      showNumber: false,
-      showOther: false,
-      showSwitch: false,
-      thisScriptInput: null,
-      selectedBashOptionId: '',
-      showArgDetail: false,
-      longName: '',
-      shortName: '',
-      helpText: '',
-      isRequired: false,
+      // Numeric validations
       isInteger: false,
-      isSigned: false
+      isSigned: false,
     }
   },
   watch: {
     selectedBashOptionId: function (val, oldVal) {
       console.info('Selecting new bash option. old bash option id: ' + oldVal + '; new bash option id: ' + val)
       let bashOption = this.scriptInProgress.getOptionById(this.selectedBashOptionId)
-      this.thisScriptInput = bashOption
-
-      this.longName = bashOption.longName
-      this.shortName = bashOption.shortName
-      this.helpText = bashOption.helpText
+      this.selectedBashArg = bashOption
 
       if (bashOption != null) {
         console.info('Showing arg detail')
         this.showArgDetail = true
+        this.reloadValuesForSelectedArg()
       }
     },
     longName: function (val) {
       console.info('new longname ' + val)
-      if (this.thisScriptInput != null) {
-        this.thisScriptInput.longName = val
+      if (this.selectedBashArg != null) {
+        this.selectedBashArg.longName = val
       }
     },
     shortName: function (val) {
       console.info('new shortname ' + val)
-      if (this.thisScriptInput != null) {
-        this.thisScriptInput.shortName = val
+      if (this.selectedBashArg != null) {
+        this.selectedBashArg.shortName = val
       }
     },
     helpText: function (val) {
       console.info('new help text ' + val)
-      if (this.thisScriptInput != null) {
-        this.thisScriptInput.helpText = val
+      if (this.selectedBashArg != null) {
+        this.selectedBashArg.helpText = val
       }
     },
     selectedValidation: function (newValidation) {
@@ -465,6 +470,11 @@ export default {
     }
   },
   methods: {
+    reloadValuesForSelectedArg: function() {
+      this.longName = this.selectedBashArg.longName
+      this.shortName =this.selectedBashArg.shortName
+      this.helpText = this.selectedBashArg.helpText
+    },
     addScriptArg: function () {
       let newOptionId = store.getNextOptionId()
 
@@ -490,23 +500,23 @@ export default {
       }
     },
     clickTypeButton: function (type) {
-      this.showString = false
-      this.showNumber = false
-      this.showSwitch = false
-      this.showOther = false
+      this.isTypeString = false
+      this.isTypeNumber = false
+      this.isTypeSwitch = false
+      this.isTypeOther = false
 
       if (type === 'string') {
-        this.showString = true
-        this.thisScriptInput.type = 'string'
+        this.isTypeString = true
+        this.selectedBashArg.type = 'string'
       } else if (type === 'number') {
-        this.thisScriptInput.type = 'number'
-        this.showNumber = true
+        this.selectedBashArg.type = 'number'
+        this.isTypeNumber = true
       } else if (type === 'switch') {
-        this.thisScriptInput.type = 'number'
-        this.showSwitch = true
+        this.selectedBashArg.type = 'number'
+        this.isTypeSwitch = true
       } else if (type === 'other') {
-        this.thisScriptInput.type = 'number'
-        this.showOther = true
+        this.selectedBashArg.type = 'number'
+        this.isTypeOther = true
       }
     },
     clickIntegerButton: function () {
