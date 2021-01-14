@@ -547,6 +547,8 @@ export default {
         this.removeAllValidations()
 
         this.selectedBashArg.type = 'number'
+
+        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL))
       } else if (type === 'switch' && !this.isTypeSwitch) {
         this.isTypeString = false
         this.isTypeNumber = false
@@ -556,6 +558,7 @@ export default {
         this.removeAllValidations()
 
         this.selectedBashArg.type = 'switch'
+        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.BOOLEAN))
       } else if (type === 'other' && !this.isTypeOther) {
         this.isTypeString = false
         this.isTypeNumber = false
@@ -567,13 +570,34 @@ export default {
         this.selectedBashArg.type = 'other'
       }
     },
-    clickIntegerToggle: function () {
+    determineNumericValidations: function () {
+      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL))
+      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL))
+      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER))
+      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER))
 
+      if (this.isInteger) {
+        if (this.isSigned) {
+          this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL))
+        } else {
+          this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL))
+        }
+      } else {
+        if (this.isSigned) {
+          this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER))
+        } else {
+          this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER))
+        }
+      }
+    },
+    clickIntegerToggle: function () {
       if (this.isInteger) {
         this.isInteger = false
       } else {
         this.isInteger = true
       }
+
+      this.determineNumericValidations()
     },
     clickSignedToggle: function () {
 
@@ -582,6 +606,8 @@ export default {
       } else {
         this.isSigned = true
       }
+
+      this.determineNumericValidations()
     },
     clickRequiredToggle: function () {
       let requiredValidation = DomainFactory.createBashValidationFromType(ValidationTypes.VALUE_REQUIRED)
