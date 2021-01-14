@@ -99,7 +99,7 @@
                         <button type="button" aria-pressed="true" aria-labelledby="required-option-label"
                                 aria-describedby="required-option-description"
                                 :class="isRequired ? buttonToggledClass : buttonNotToggledClass"
-                                @click="clickRequiredButton()">
+                                @click="clickRequiredToggle()">
                           <span class="sr-only">Use setting</span>
                           <!-- On: "translate-x-5", Off: "translate-x-0" -->
                           <span aria-hidden="true"
@@ -155,10 +155,10 @@
                                     :class="isNoRestrictionsSelected ? radioSelectedTopClass : radioNotSelectedTopClass">
                                   <div class="flex items-center h-5">
                                     <input id="no-restrictions"
-                                           value="no_restrictions"
+                                           value="-1"
                                            name="no_restrictions"
                                            type="radio"
-                                           v-model="selectedValidation"
+                                           v-model="selectedStringValidation"
                                            class="h-4 w-4 text-light-blue-600 cursor-pointer focus:ring-light-blue-500 border-gray-300"
                                            checked>
                                   </div>
@@ -182,9 +182,9 @@
                                   <div class="flex items-center h-5">
                                     <input id="alphanumeric"
                                            name="alphanumeric"
-                                           value="alphanumeric"
+                                           value="21"
                                            type="radio"
-                                           v-model="selectedValidation"
+                                           v-model="selectedStringValidation"
                                            class="h-4 w-4 text-light-blue-600 cursor-pointer focus:ring-light-blue-500 border-gray-300">
                                   </div>
                                   <label for="alphanumeric" class="ml-3 flex flex-col cursor-pointer">
@@ -207,9 +207,9 @@
                                   <div class="flex items-center h-5">
                                     <input id="email-address"
                                            name="email_address"
-                                           value="email_address"
+                                           value="10"
                                            type="radio"
-                                           v-model="selectedValidation"
+                                           v-model="selectedStringValidation"
                                            class="h-4 w-4 text-light-blue-600 cursor-pointer focus:ring-light-blue-500 border-gray-300">
                                   </div>
                                   <label for="email-address" class="ml-3 flex flex-col cursor-pointer">
@@ -231,9 +231,9 @@
                                   <div class="flex items-center h-5">
                                     <input id="url"
                                            name="url"
-                                           value="url"
+                                           value="9"
                                            type="radio"
-                                           v-model="selectedValidation"
+                                           v-model="selectedStringValidation"
                                            class="h-4 w-4 text-light-blue-600 cursor-pointer focus:ring-light-blue-500 border-gray-300">
                                   </div>
                                   <label for="url" class="ml-3 flex flex-col cursor-pointer">
@@ -277,7 +277,7 @@
                               <button type="button" aria-pressed="true" aria-labelledby="integer-option-label"
                                       aria-describedby="integer-option-description"
                                       :class="isInteger ? buttonToggledClass : buttonNotToggledClass"
-                                      @click="clickIntegerButton()">
+                                      @click="clickIntegerToggle()">
                                 <span class="sr-only">Use setting</span>
                                 <!-- On: "translate-x-5", Off: "translate-x-0" -->
                                 <span aria-hidden="true"
@@ -298,7 +298,7 @@
                               <button type="button" aria-pressed="true" aria-labelledby="signed-option-label"
                                       aria-describedby="signed-option-description"
                                       :class="isSigned ? buttonToggledClass : buttonNotToggledClass"
-                                      @click="clickSignedButton()">
+                                      @click="clickSignedToggle()">
                                 <span class="sr-only">Use setting</span>
                                 <!-- On: "translate-x-5", Off: "translate-x-0" -->
                                 <span aria-hidden="true"
@@ -353,7 +353,7 @@
 
 <script>
 import ScriptInputTypeMixin from './mixins/ScriptInputTypeMixin.js'
-import {DomainFactory} from '../../domain/LicketyScriptDomainFactory'
+import {DomainFactory, ValidationTypes} from '../../domain/LicketyScriptDomainFactory'
 import {store} from '../../store'
 
 export default {
@@ -415,7 +415,7 @@ export default {
       isAlphanumericSelected: false,
       isEmailAddressSelected: false,
       isUrlSelected: false,
-      selectedValidation: "no_restrictions",
+      selectedStringValidation: -1,
 
       // Numeric validations
       isInteger: false,
@@ -452,28 +452,55 @@ export default {
         this.selectedBashArg.helpText = val
       }
     },
-    selectedValidation: function (newValidation) {
+    selectedStringValidation: function (newValidation) {
       this.isNoRestrictionsSelected = false
       this.isAlphanumericSelected = false
       this.isEmailAddressSelected = false
       this.isUrlSelected = false
 
-      if (newValidation === 'no_restrictions') {
+      console.debug('selected new string validation: ' + newValidation)
+
+      if (newValidation === '-1') {
         this.isNoRestrictionsSelected = true
-      } else if (newValidation === 'email_address') {
+      } else if (newValidation === '10') {
         this.isEmailAddressSelected = true
-      } else if (newValidation === 'alphanumeric') {
+      } else if (newValidation === '21') {
         this.isAlphanumericSelected = true
-      } else if (newValidation === 'url') {
+      } else if (newValidation === '9') {
         this.isUrlSelected = true
       }
     }
   },
   methods: {
-    reloadValuesForSelectedArg: function() {
+    removeAllValidations: function () {
+        this.selectedBashArg.removeAllValidations()
+
+        this.isNoRestrictionsSelected = true
+        this.isAlphanumericSelected = false
+        this.isEmailAddressSelected = false
+        this.isUrlSelected = false
+        this.selectedStringValidation = -1
+
+        this.isInteger = false
+        this.isSigned = false
+
+        if (this.isRequired) {
+          // Add required back in, if it's selected.
+          let requiredValidation = DomainFactory.createBashValidationFromType(ValidationTypes.VALUE_REQUIRED)
+          this.selectedBashArg.addValidation(requiredValidation)
+        }
+    },
+    reloadValuesForSelectedArg: function () {
       this.longName = this.selectedBashArg.longName
-      this.shortName =this.selectedBashArg.shortName
+      this.shortName = this.selectedBashArg.shortName
       this.helpText = this.selectedBashArg.helpText
+
+      let requiredValidation = DomainFactory.createBashValidationFromType(ValidationTypes.VALUE_REQUIRED)
+      if (this.selectedBashArg.hasValidation(requiredValidation)) {
+        this.isRequired = true
+      } else {
+        this.isRequired = false
+      }
     },
     addScriptArg: function () {
       let newOptionId = store.getNextOptionId()
@@ -501,25 +528,46 @@ export default {
     },
     clickTypeButton: function (type) {
       this.isTypeString = false
-      this.isTypeNumber = false
-      this.isTypeSwitch = false
-      this.isTypeOther = false
 
-      if (type === 'string') {
+      if (type === 'string' && !this.isTypeString) {
         this.isTypeString = true
+        this.isTypeNumber = false
+        this.isTypeSwitch = false
+        this.isTypeOther = false
+
+        this.removeAllValidations()
+
         this.selectedBashArg.type = 'string'
-      } else if (type === 'number') {
-        this.selectedBashArg.type = 'number'
+      } else if (type === 'number' && !this.isTypeNumber) {
+        this.isTypeString = false
         this.isTypeNumber = true
-      } else if (type === 'switch') {
+        this.isTypeSwitch = false
+        this.isTypeOther = false
+
+        this.removeAllValidations()
+
         this.selectedBashArg.type = 'number'
+      } else if (type === 'switch' && !this.isTypeSwitch) {
+        this.isTypeString = false
+        this.isTypeNumber = false
         this.isTypeSwitch = true
-      } else if (type === 'other') {
-        this.selectedBashArg.type = 'number'
+        this.isTypeOther = false
+
+        this.removeAllValidations()
+
+        this.selectedBashArg.type = 'switch'
+      } else if (type === 'other' && !this.isTypeOther) {
+        this.isTypeString = false
+        this.isTypeNumber = false
+        this.isTypeSwitch = false
         this.isTypeOther = true
+
+        this.removeAllValidations()
+
+        this.selectedBashArg.type = 'other'
       }
     },
-    clickIntegerButton: function () {
+    clickIntegerToggle: function () {
 
       if (this.isInteger) {
         this.isInteger = false
@@ -527,12 +575,29 @@ export default {
         this.isInteger = true
       }
     },
-    clickSignedButton: function () {
+    clickSignedToggle: function () {
 
       if (this.isSigned) {
         this.isSigned = false
       } else {
         this.isSigned = true
+      }
+    },
+    clickRequiredToggle: function () {
+      let requiredValidation = DomainFactory.createBashValidationFromType(ValidationTypes.VALUE_REQUIRED)
+
+      if (this.isRequired) {
+        this.isRequired = false
+
+        if (this.selectedBashArg.hasValidation(requiredValidation)) {
+          this.selectedBashArg.removeValidation(requiredValidation)
+        }
+      } else {
+        this.isRequired = true
+
+        if (!this.selectedBashArg.hasValidation(requiredValidation)) {
+          this.selectedBashArg.addValidation(requiredValidation)
+        }
       }
     }
   }
