@@ -38,7 +38,6 @@ import ScriptInformation from "@/components/App/ScriptInformation";
 import CreateScript from "@/components/App/CreateScript";
 import ScriptInputTypeMixin from '../components/App/mixins/ScriptInputTypeMixin'
 
-// import { store } from '../store.js'
 import axios from 'axios'
 
 export default {

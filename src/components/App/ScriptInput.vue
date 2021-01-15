@@ -454,6 +454,9 @@ export default {
       console.info('new longname ' + val)
       if (this.selectedBashArg != null) {
         this.selectedBashArg.longName = val
+
+        let selectedOptionInDropdown = this.bashOptions.findIndex(optionId => optionId.id === this.selectedBashOptionId)
+        this.bashOptions[selectedOptionInDropdown].value = val
       }
     },
     shortName: function (val) {
