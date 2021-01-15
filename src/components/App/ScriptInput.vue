@@ -353,6 +353,17 @@
           </div>
         </div>
       </div>
+      <div class="mt-10  flex justify-end">
+        <button type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-blue-500">
+          Cancel
+        </button>
+        <button
+            type="submit"
+            @click="createScript"
+            class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-light-blue-500 hover:bg-light-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-blue-500">
+          Create this project
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -361,6 +372,7 @@
 import ScriptInputTypeMixin from './mixins/ScriptInputTypeMixin.js'
 import {DomainFactory, ValidationTypes} from '../../domain/LicketyScriptDomainFactory'
 import {store} from '../../store'
+import axios from "axios";
 
 export default {
   name: "ScriptInput",
@@ -493,6 +505,28 @@ export default {
     }
   },
   methods: {
+    createScript: function () {
+      console.info('About to submit script!')
+
+      this.onSubmit()
+
+      console.info('Completed submission')
+    },
+    onSubmit: function () {
+      axios({
+        url: 'https://api.licketyscript.app/scripts',
+        method: 'POST',
+        data: this.scriptInProgress,
+        responseType: 'blob'
+      }).then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', this.scriptInProgress.scriptName + '.zip')
+        document.body.appendChild(link)
+        link.click()
+      }).catch(e => { this.errors.push(e) })
+    },
     removeAllValidations: function () {
         this.selectedBashArg.removeAllValidations()
 
