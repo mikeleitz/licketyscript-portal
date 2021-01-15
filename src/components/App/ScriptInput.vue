@@ -560,7 +560,7 @@ export default {
     addScriptArg: function () {
       let newOptionId = store.getNextOptionId()
 
-      let newBashOption = DomainFactory.createBashOption(newOptionId, 'NEW OPTION ' + newOptionId, null)
+      let newBashOption = DomainFactory.createBashOption(newOptionId, 'new-option-' + newOptionId, null)
       this.scriptInProgress.addOption(newBashOption)
 
       console.info('Created new option: ' + newBashOption + ' with id: ' + newBashOption.id)
