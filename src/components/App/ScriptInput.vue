@@ -582,7 +582,7 @@ export default {
     removeScriptArg: function () {
       if (this.selectedBashOptionId != null && this.selectedBashOptionId != '') {
         let id = this.selectedBashOptionId;
-        console.info("hello from remove with id " + id)
+        console.info("Remove option with id " + id)
         let optionIndex = this.bashOptions.findIndex(arrayOption => arrayOption.id === id)
         this.bashOptions.splice(optionIndex, 1)
 
@@ -590,6 +590,7 @@ export default {
           this.selectedBashOptionId = this.bashOptions[0].id
         } else {
           this.selectedBashOptionId = ''
+          this.showArgDetail = false
         }
       }
     },
