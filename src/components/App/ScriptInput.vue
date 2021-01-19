@@ -26,8 +26,6 @@
                       </option>
                     </select>
 
-                    <span>Selected id: {{ selectedBashOptionId != '' ? selectedBashOptionId : 'N/A' }}</span>
-
                     <button type="button" @click="addScriptArg"
                             class="bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                       Add
@@ -62,6 +60,7 @@
                              name="long_name"
                              id="long_name"
                              class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm"
+                             autocomplete="off"
                              v-model="longName">
                     </div>
 
@@ -71,6 +70,7 @@
                              name="short_name"
                              id="short_name"
                              class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm"
+                             autocomplete="off"
                              v-model="shortName">
                     </div>
 
@@ -80,6 +80,7 @@
                              name="help_text"
                              id="help_text"
                              class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm"
+                             autocomplete="off"
                              v-model="helpText">
                     </div>
                   </div>
@@ -319,6 +320,7 @@
                                      name="lower_bound_value"
                                      id="lower_bound_value"
                                      v-model="lowerBound"
+                                     autocomplete="off"
                                      class="ml-4 relative inline-flex flex-shrink-0 h-6 w-20 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md">
                             </li>
 
@@ -335,6 +337,7 @@
                                      name="upper_bound_value"
                                      id="upper_bound_value"
                                      v-model="upperBound"
+                                     autocomplete="off"
                                      class="ml-4 relative inline-flex flex-shrink-0 h-6 w-20 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md">
                             </li>
                           </ul>
@@ -353,10 +356,10 @@
           </div>
         </div>
       </div>
-      <div class="mt-10  flex justify-end">
-        <button type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-blue-500">
+      <div class="mt-10 mb-10  flex justify-end">
+<!--        <button type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-blue-500">
           Cancel
-        </button>
+        </button>-->
         <button
             type="submit"
             @click="createScript"
@@ -566,6 +569,15 @@ export default {
       console.info('Created new option: ' + newBashOption + ' with id: ' + newBashOption.id)
 
       this.bashOptions.unshift({id: newBashOption.id, value: newBashOption.longName})
+
+      this.selectedBashArg = newBashOption
+
+      if (newBashOption != null) {
+        this.selectedBashOptionId = newOptionId
+        console.info('Showing arg detail')
+        this.showArgDetail = true
+        this.reloadValuesForSelectedArg()
+      }
     },
     removeScriptArg: function () {
       if (this.selectedBashOptionId != null && this.selectedBashOptionId != '') {
