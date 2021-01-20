@@ -125,8 +125,13 @@
                   <button type="button"
                           v-on:click="clickTypeButton('number')"
                           :class="isTypeNumber ? generalButtonSelectedClass : generalButtonNotSelectedClass">
-                    Number
+                    Integer
                   </button>
+                      <!--                  <button type="button"
+                                                v-on:click="clickTypeButton('number')"
+                                                :class="isTypeNumber ? generalButtonSelectedClass : generalButtonNotSelectedClass">
+                                          Number
+                                        </button>-->
                   <button type="button"
                           v-on:click="clickTypeButton('switch')"
                           :class="isTypeSwitch ? generalButtonSelectedClass : generalButtonNotSelectedClass">
@@ -265,6 +270,8 @@
                             Additional Validations
                           </label>
                           <ul class="mt-2 divide-y divide-gray-200">
+<!--
+
                             <li class="py-4 flex items-center justify-between">
                               <div class="flex flex-col">
                                 <p id="integer-option-label" class="text-sm font-medium text-gray-900">
@@ -274,17 +281,18 @@
                                   Is this value an integer.
                                 </p>
                               </div>
-                              <!-- On: "bg-teal-500", Off: "bg-gray-200" -->
+                              &lt;!&ndash; On: "bg-teal-500", Off: "bg-gray-200" &ndash;&gt;
                               <button type="button" aria-pressed="true" aria-labelledby="integer-option-label"
                                       aria-describedby="integer-option-description"
                                       :class="isInteger ? buttonToggledClass : buttonNotToggledClass"
                                       @click="clickIntegerToggle()">
                                 <span class="sr-only">Use setting</span>
-                                <!-- On: "translate-x-5", Off: "translate-x-0" -->
+                                &lt;!&ndash; On: "translate-x-5", Off: "translate-x-0" &ndash;&gt;
                                 <span aria-hidden="true"
                                       :class="isInteger ? spanToggledClass : spanNotToggledClass"></span>
                               </button>
                             </li>
+-->
 
                             <li class="py-4 flex items-center justify-between">
                               <div class="flex flex-col">
@@ -442,7 +450,7 @@ export default {
       selectedStringValidation: -1,
 
       // Numeric validations
-      isInteger: false,
+      isInteger: true,    // always true for version 1. Real numbers in version 2.
       isSigned: false,
       lowerBound: '',
       upperBound: ''
@@ -514,13 +522,17 @@ export default {
     createScript: function () {
       console.info('About to submit script!')
 
+      console.info('Json for script')
+      console.info(this.scriptInProgress.toJson())
+
       this.onSubmit()
 
       console.info('Completed submission')
     },
     onSubmit: function () {
       axios({
-        url: 'https://api.licketyscript.app/scripts',
+        // url: 'https://api.licketyscript.app/scripts',
+        url: 'http://localhost:8080/scripts',
         method: 'POST',
         data: this.scriptInProgress,
         responseType: 'blob'
@@ -542,7 +554,7 @@ export default {
         this.isUrlSelected = false
         this.selectedStringValidation = -1
 
-        this.isInteger = false
+        this.isInteger = true
         this.isSigned = false
 
         if (this.isRequired) {
@@ -619,7 +631,8 @@ export default {
 
         this.selectedBashArg.type = 'number'
 
-        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL))
+        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER))
+        // this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL))
       } else if (type === 'switch' && !this.isTypeSwitch) {
         this.isTypeString = false
         this.isTypeNumber = false
@@ -668,15 +681,15 @@ export default {
 
       if (this.isInteger) {
         if (this.isSigned) {
-          this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL))
-        } else {
-          this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL))
-        }
-      } else {
-        if (this.isSigned) {
           this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER))
         } else {
           this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER))
+        }
+      } else {
+        if (this.isSigned) {
+          this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL))
+        } else {
+          this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL))
         }
       }
 
