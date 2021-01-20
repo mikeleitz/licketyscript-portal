@@ -57,8 +57,8 @@ export default {
     getStatus: function () {
       this.loading = true
       axios({
-        url: 'http://localhost:8080/status',
-        // url: 'https://api.licketyscript.app/status',
+        // url: 'http://localhost:8080/status',
+        url: 'https://api.licketyscript.app/status',
         method: 'GET'
       }).then(result => {
         this.generatorStatus = result.data.status
