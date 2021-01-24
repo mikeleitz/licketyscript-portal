@@ -85,30 +85,6 @@
                     </div>
                   </div>
 
-                  <div class="pt-6 divide-y divide-gray-200">
-                    <ul class="mt-2 divide-y divide-gray-200">
-                      <li class="py-4 flex items-center justify-between">
-                        <div class="flex flex-col">
-                          <p id="required-option-label" class="text-sm font-medium text-gray-900">
-                            Required
-                          </p>
-                          <p id="required-option-description" class="text-sm text-gray-500">
-                            Is this value a required input.
-                          </p>
-                        </div>
-                        <!-- On: "bg-teal-500", Off: "bg-gray-200" -->
-                        <button type="button" aria-pressed="true" aria-labelledby="required-option-label"
-                                aria-describedby="required-option-description"
-                                :class="isRequired ? buttonToggledClass : buttonNotToggledClass"
-                                @click="clickRequiredToggle()">
-                          <span class="sr-only">Use setting</span>
-                          <!-- On: "translate-x-5", Off: "translate-x-0" -->
-                          <span aria-hidden="true"
-                                :class="isRequired ? spanToggledClass : spanNotToggledClass"></span>
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
 
 
                   <div class="space-y-1.5 mt-4">
@@ -127,11 +103,6 @@
                           :class="isTypeNumber ? generalButtonSelectedClass : generalButtonNotSelectedClass">
                     Integer
                   </button>
-                      <!--                  <button type="button"
-                                                v-on:click="clickTypeButton('number')"
-                                                :class="isTypeNumber ? generalButtonSelectedClass : generalButtonNotSelectedClass">
-                                          Number
-                                        </button>-->
                   <button type="button"
                           v-on:click="clickTypeButton('switch')"
                           :class="isTypeSwitch ? generalButtonSelectedClass : generalButtonNotSelectedClass">
@@ -150,15 +121,42 @@
                       <!-- String type -->
                       <div class="pt-6 divide-y divide-gray-200">
                         <fieldset>
-                          <label class=" mb-4 block text-sm font-medium text-gray-700">
-                            Additional Validations
+                          <label class=" mb-4 block font-medium text-gray-700">
+                            Validations
                           </label>
                           <ul class="mt-2 divide-y divide-gray-200">
                             <li class="py-4 flex items-center justify-between">
+                              <div class="flex flex-col">
+                                <p id="required-option-label-string" class="text-sm font-medium text-gray-900">
+                                  Required
+                                </p>
+                                <p id="required-option-description-string" class="text-sm text-gray-500">
+                                  Is this value a required input.
+                                </p>
+                              </div>
+                              <!-- On: "bg-teal-500", Off: "bg-gray-200" -->
+                              <button type="button" aria-pressed="true" aria-labelledby="required-option-label"
+                                      aria-describedby="required-option-description"
+                                      :class="isRequired ? buttonToggledClass : buttonNotToggledClass"
+                                      @click="clickRequiredToggle()">
+                                <span class="sr-only">Use setting</span>
+                                <!-- On: "translate-x-5", Off: "translate-x-0" -->
+                                <span aria-hidden="true"
+                                      :class="isRequired ? spanToggledClass : spanNotToggledClass"></span>
+                              </button>
+                            </li>
+                            <li class="py-4 flex items-center justify-between">
                               <div class="mt-1 bg-white rounded-md shadow-sm -space-y-px">
                                 <!-- On: "bg-light-blue-50 border-light-blue-200 z-10", Off: "border-gray-200" -->
-                                <div
+                                <div class="flex flex-col mb-6">
+                                  <p id="string-restrictions-label" class="text-sm font-medium text-gray-900">
+                                    This value
+                                  </p>
+                                </div>
+
+                                <div id="string-restrictions"
                                     :class="isNoRestrictionsSelected ? radioSelectedTopClass : radioNotSelectedTopClass">
+
                                   <div class="flex items-center h-5">
                                     <input id="no-restrictions"
                                            value="-1"
@@ -266,33 +264,31 @@
                       <!-- Numeric type -->
                       <div class="pt-6 divide-y divide-gray-200">
                         <fieldset>
-                          <label class=" mb-4 block text-sm font-medium text-gray-700">
-                            Additional Validations
+                          <label class=" mb-4 block font-medium text-gray-700">
+                            Validations
                           </label>
                           <ul class="mt-2 divide-y divide-gray-200">
-<!--
-
                             <li class="py-4 flex items-center justify-between">
                               <div class="flex flex-col">
-                                <p id="integer-option-label" class="text-sm font-medium text-gray-900">
-                                  Is Integer
+                                <p id="required-option-label-number" class="text-sm font-medium text-gray-900">
+                                  Required
                                 </p>
-                                <p id="integer-option-description" class="text-sm text-gray-500">
-                                  Is this value an integer.
+                                <p id="required-option-description-number" class="text-sm text-gray-500">
+                                  Is this value a required input.
                                 </p>
                               </div>
-                              &lt;!&ndash; On: "bg-teal-500", Off: "bg-gray-200" &ndash;&gt;
-                              <button type="button" aria-pressed="true" aria-labelledby="integer-option-label"
-                                      aria-describedby="integer-option-description"
-                                      :class="isInteger ? buttonToggledClass : buttonNotToggledClass"
-                                      @click="clickIntegerToggle()">
+                              <!-- On: "bg-teal-500", Off: "bg-gray-200" -->
+                              <button type="button" aria-pressed="true" aria-labelledby="required-option-label"
+                                      aria-describedby="required-option-description"
+                                      :class="isRequired ? buttonToggledClass : buttonNotToggledClass"
+                                      @click="clickRequiredToggle()">
                                 <span class="sr-only">Use setting</span>
-                                &lt;!&ndash; On: "translate-x-5", Off: "translate-x-0" &ndash;&gt;
+                                <!-- On: "translate-x-5", Off: "translate-x-0" -->
                                 <span aria-hidden="true"
-                                      :class="isInteger ? spanToggledClass : spanNotToggledClass"></span>
+                                      :class="isRequired ? spanToggledClass : spanNotToggledClass"></span>
                               </button>
                             </li>
--->
+
 
                             <li class="py-4 flex items-center justify-between">
                               <div class="flex flex-col">
@@ -347,6 +343,55 @@
                                      v-model="upperBound"
                                      autocomplete="off"
                                      class="ml-4 relative inline-flex flex-shrink-0 h-6 w-20 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md">
+                            </li>
+                          </ul>
+                        </fieldset>
+                      </div>
+
+                    </div>
+
+                    <div v-show="isTypeSwitch">
+
+                      <!-- Switch type -->
+                      <div class="pt-6 divide-y divide-gray-200">
+                        <fieldset>
+                          <label class=" mb-4 block font-medium text-gray-700">
+                            No additional validations for this type
+                          </label>
+                          <ul class="mt-2 divide-y divide-gray-200">
+                          </ul>
+                        </fieldset>
+                      </div>
+
+                    </div>
+
+                    <div v-show="isTypeOther">
+                      <!-- Other type -->
+                      <div class="pt-6 divide-y divide-gray-200">
+                        <fieldset>
+                          <label class=" mb-4 block font-medium text-gray-700">
+                            Validations
+                          </label>
+                          <ul class="mt-2 divide-y divide-gray-200">
+                            <li class="py-4 flex items-center justify-between">
+                              <div class="flex flex-col">
+                                <p id="required-option-label-other" class="text-sm font-medium text-gray-900">
+                                  Required
+                                </p>
+                                <p id="required-option-description-other" class="text-sm text-gray-500">
+                                  Is this value a required input.
+                                </p>
+                              </div>
+                              <!-- On: "bg-teal-500", Off: "bg-gray-200" -->
+                              <button type="button" aria-pressed="true" aria-labelledby="required-option-label"
+                                      aria-describedby="required-option-description"
+                                      :class="isRequired ? buttonToggledClass : buttonNotToggledClass"
+                                      @click="clickRequiredToggle()">
+                                <span class="sr-only">Use setting</span>
+                                <!-- On: "translate-x-5", Off: "translate-x-0" -->
+                                <span aria-hidden="true"
+                                      :class="isRequired ? spanToggledClass : spanNotToggledClass"></span>
+                              </button>
                             </li>
                           </ul>
                         </fieldset>
@@ -531,8 +576,8 @@ export default {
     },
     onSubmit: function () {
       axios({
-        url: 'https://api.licketyscript.app/scripts',
-        // url: 'http://localhost:8080/scripts',
+        // url: 'https://api.licketyscript.app/scripts',
+        url: 'http://localhost:8080/scripts',
         method: 'POST',
         data: this.scriptInProgress,
         responseType: 'blob'
@@ -567,13 +612,6 @@ export default {
       this.longName = this.selectedBashArg.longName
       this.shortName = this.selectedBashArg.shortName
       this.helpText = this.selectedBashArg.helpText
-
-      let requiredValidation = DomainFactory.createBashValidationFromType(ValidationTypes.VALUE_REQUIRED)
-      if (this.selectedBashArg.hasValidation(requiredValidation)) {
-        this.isRequired = true
-      } else {
-        this.isRequired = false
-      }
     },
     addScriptArg: function () {
       let newOptionId = store.getNextOptionId()
@@ -611,6 +649,7 @@ export default {
     },
     clickTypeButton: function (type) {
       this.isTypeString = false
+      this.isRequired = false
 
       if (type === 'string' && !this.isTypeString) {
         this.isTypeString = true
