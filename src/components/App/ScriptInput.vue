@@ -576,8 +576,8 @@ export default {
     },
     onSubmit: function () {
       axios({
-        // url: 'https://api.licketyscript.app/scripts',
-        url: 'http://localhost:8080/scripts',
+        url: 'https://api.licketyscript.app/scripts',
+        // url: 'http://localhost:8080/scripts',
         method: 'POST',
         data: this.scriptInProgress,
         responseType: 'blob'
