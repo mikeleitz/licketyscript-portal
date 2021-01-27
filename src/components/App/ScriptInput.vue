@@ -17,6 +17,7 @@
                   <div class="mt-2 flex items-center space-x-5">
 
                     <select v-model="selectedBashOptionId"
+                            @change="changedBashOptionId($event)"
                             class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
                       <option disabled value="">Select option</option>
                       <option v-for="bashOption in bashOptions"
@@ -84,8 +85,6 @@
                              v-model="helpText">
                     </div>
                   </div>
-
-
 
                   <div class="space-y-1.5 mt-4">
                     <label for="button_row" class=" mb-4 block text-sm font-medium text-gray-700">
@@ -506,17 +505,6 @@ export default {
     }
   },
   watch: {
-    selectedBashOptionId: function (val, oldVal) {
-      console.info('Selecting new bash option. old bash option id: ' + oldVal + '; new bash option id: ' + val)
-      let bashOption = this.scriptInProgress.getOptionById(this.selectedBashOptionId)
-      this.selectedBashArg = bashOption
-
-      if (bashOption != null) {
-        console.info('Showing arg detail')
-        this.showArgDetail = true
-        this.reloadValuesForSelectedArg()
-      }
-    },
     lowerBound: function(val) {
       console.info("Setting new lower bound: " + val)
       this.setNumericValidationsFromLocalVariables()
@@ -526,7 +514,6 @@ export default {
       this.setNumericValidationsFromLocalVariables()
     },
     longName: function (val) {
-      console.info('new longname ' + val)
       if (this.selectedBashArg != null) {
         this.selectedBashArg.longName = val
 
@@ -535,19 +522,28 @@ export default {
       }
     },
     shortName: function (val) {
-      console.info('new shortname ' + val)
       if (this.selectedBashArg != null) {
         this.selectedBashArg.shortName = val
       }
     },
     helpText: function (val) {
-      console.info('new help text ' + val)
       if (this.selectedBashArg != null) {
         this.selectedBashArg.helpText = val
       }
     }
   },
   methods: {
+    changedBashOptionId: function() {
+      console.info('Selected new bash option id ' + this.selectedBashOptionId)
+
+      let bashOption = this.scriptInProgress.getOptionById(this.selectedBashOptionId)
+      this.selectedBashArg = bashOption
+
+      if (bashOption != null) {
+        this.showArgDetail = true
+        this.reloadValuesForSelectedArg()
+      }
+    },
     createScript: function () {
       console.info('About to submit script!')
 
@@ -597,14 +593,24 @@ export default {
       this.shortName = this.selectedBashArg.shortName
       this.helpText = this.selectedBashArg.helpText
 
-      let bashArg = this.selectedBashArg
-      console.info(bashArg.toJson())
+      this.isTypeString = false
+      this.isTypeNumber = false
+      this.isTypeSwitch = false
+      this.isTypeOther = false
 
       if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER)) ||
           this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER))) {
         this.setNumericValidationsFromStoreVariable()
+        this.isTypeNumber = true
       } else if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.STRING))) {
         this.setStringValidationsFromStoreVariable()
+        this.isTypeString = true
+      } else if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.BOOLEAN))) {
+        this.setBooleanValidationsFromStoreVariable()
+        this.isTypeSwitch = true
+      } else {
+        this.setOtherValidationsFromStoreVariable()
+        this.isTypeOther = true
       }
     },
     addScriptArg: function () {
@@ -736,8 +742,6 @@ export default {
         this.isNoRestrictionsSelected = true
         this.selectedStringValidation = '-1'
       }
-
-      console.info("is no restrictions selected " + this.isNoRestrictionsSelected)
     },
     setNumericValidationsFromLocalVariables: function () {
       this.selectedBashArg.removeAllValidations()
@@ -775,6 +779,12 @@ export default {
       }
     },
     setNumericValidationsFromStoreVariable: function() {
+
+    },
+    setBooleanValidationsFromStoreVariable: function() {
+
+    },
+    setOtherValidationsFromStoreVariable: function() {
 
     },
     clickIntegerToggle: function () {
