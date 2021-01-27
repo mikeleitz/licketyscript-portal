@@ -163,6 +163,7 @@
                                            name="no_restrictions"
                                            type="radio"
                                            v-model="selectedStringValidation"
+                                           @change="changedStringValidation($event)"
                                            class="h-4 w-4 text-light-blue-600 cursor-pointer focus:ring-light-blue-500 border-gray-300"
                                            checked>
                                   </div>
@@ -189,6 +190,7 @@
                                            value="21"
                                            type="radio"
                                            v-model="selectedStringValidation"
+                                           @change="changedStringValidation($event)"
                                            class="h-4 w-4 text-light-blue-600 cursor-pointer focus:ring-light-blue-500 border-gray-300">
                                   </div>
                                   <label for="alphanumeric" class="ml-3 flex flex-col cursor-pointer">
@@ -214,6 +216,7 @@
                                            value="10"
                                            type="radio"
                                            v-model="selectedStringValidation"
+                                           @change="changedStringValidation($event)"
                                            class="h-4 w-4 text-light-blue-600 cursor-pointer focus:ring-light-blue-500 border-gray-300">
                                   </div>
                                   <label for="email-address" class="ml-3 flex flex-col cursor-pointer">
@@ -238,6 +241,7 @@
                                            value="9"
                                            type="radio"
                                            v-model="selectedStringValidation"
+                                           @change="changedStringValidation($event)"
                                            class="h-4 w-4 text-light-blue-600 cursor-pointer focus:ring-light-blue-500 border-gray-300">
                                   </div>
                                   <label for="url" class="ml-3 flex flex-col cursor-pointer">
@@ -515,11 +519,11 @@ export default {
     },
     lowerBound: function(val) {
       console.info("Setting new lower bound: " + val)
-      this.determineNumericValidations()
+      this.setNumericValidationsFromLocalVariables()
     },
     upperBound: function(val) {
       console.info("Setting new upper bound: " + val)
-      this.determineNumericValidations()
+      this.setNumericValidationsFromLocalVariables()
     },
     longName: function (val) {
       console.info('new longname ' + val)
@@ -541,26 +545,6 @@ export default {
       if (this.selectedBashArg != null) {
         this.selectedBashArg.helpText = val
       }
-    },
-    selectedStringValidation: function (newValidation) {
-      this.isNoRestrictionsSelected = false
-      this.isAlphanumericSelected = false
-      this.isEmailAddressSelected = false
-      this.isUrlSelected = false
-
-      console.debug('selected new string validation: ' + newValidation)
-
-      if (newValidation === '-1') {
-        this.isNoRestrictionsSelected = true
-      } else if (newValidation === '10') {
-        this.isEmailAddressSelected = true
-      } else if (newValidation === '21') {
-        this.isAlphanumericSelected = true
-      } else if (newValidation === '9') {
-        this.isUrlSelected = true
-      }
-
-      this.determineStringValidations()
     }
   },
   methods: {
@@ -612,6 +596,16 @@ export default {
       this.longName = this.selectedBashArg.longName
       this.shortName = this.selectedBashArg.shortName
       this.helpText = this.selectedBashArg.helpText
+
+      let bashArg = this.selectedBashArg
+      console.info(bashArg.toJson())
+
+      if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER)) ||
+          this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER))) {
+        this.setNumericValidationsFromStoreVariable()
+      } else if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.STRING))) {
+        this.setStringValidationsFromStoreVariable()
+      }
     },
     addScriptArg: function () {
       let newOptionId = store.getNextOptionId()
@@ -627,9 +621,15 @@ export default {
 
       if (newBashOption != null) {
         this.selectedBashOptionId = newOptionId
+
         console.info('Showing arg detail')
-        this.showArgDetail = true
+
+        // Default all new args to string.
+        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.STRING))
+
         this.reloadValuesForSelectedArg()
+
+        this.showArgDetail = true
       }
     },
     removeScriptArg: function () {
@@ -693,30 +693,58 @@ export default {
         this.selectedBashArg.type = 'other'
       }
     },
-    determineStringValidations: function() {
-      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.ALPHA_NUMERIC))
-      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.EMAIL))
-      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.URL))
+    setStringValidationsFromLocalVariables: function() {
+      this.selectedBashArg.removeAllValidations()
+
+      this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.STRING))
+
+      if (this.isRequired) {
+        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.VALUE_REQUIRED))
+      }
 
       if (this.isNoRestrictionsSelected) {
-        console.debug('No string restrictions selected.')
+        console.debug('No string restrictions selected.');
       } else if (this.isAlphanumericSelected) {
-        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.ALPHA_NUMERIC))
+        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.ALPHA_NUMERIC));
       } else if (this.isEmailAddressSelected) {
-        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.EMAIL))
+        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.EMAIL));
       } else if (this.isUrlSelected) {
-        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.URL))
+        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.URL));
       }
     },
-    determineNumericValidations: function () {
-      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL))
-      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL))
-      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER))
-      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER))
-      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN))
-      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN_EQUAL))
-      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN))
-      this.selectedBashArg.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN_EQUAL))
+    setStringValidationsFromStoreVariable: function() {
+      this.isNoRestrictionsSelected = false
+      this.isAlphanumericSelected = false
+      this.isEmailAddressSelected = false
+      this.isUrlSelected = false
+      this.isRequired = false
+
+      if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.VALUE_REQUIRED))) {
+        this.isRequired = true
+      }
+
+      if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.ALPHA_NUMERIC))) {
+        this.isAlphanumericSelected = true
+        this.selectedStringValidation = '21'
+      } else if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.EMAIL))) {
+        this.isEmailAddressSelected = true
+        this.selectedStringValidation = '10'
+      } else if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.URL))) {
+        this.isUrlSelected = true
+        this.selectedStringValidation = '9'
+      } else {
+        this.isNoRestrictionsSelected = true
+        this.selectedStringValidation = '-1'
+      }
+
+      console.info("is no restrictions selected " + this.isNoRestrictionsSelected)
+    },
+    setNumericValidationsFromLocalVariables: function () {
+      this.selectedBashArg.removeAllValidations()
+
+      if (this.isRequired) {
+        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.VALUE_REQUIRED))
+      }
 
       if (this.isInteger) {
         if (this.isSigned) {
@@ -746,6 +774,9 @@ export default {
         this.selectedBashArg.addValidation(validation)
       }
     },
+    setNumericValidationsFromStoreVariable: function() {
+
+    },
     clickIntegerToggle: function () {
       if (this.isInteger) {
         this.isInteger = false
@@ -753,7 +784,7 @@ export default {
         this.isInteger = true
       }
 
-      this.determineNumericValidations()
+      this.setNumericValidationsFromLocalVariables()
     },
     clickSignedToggle: function () {
 
@@ -763,7 +794,30 @@ export default {
         this.isSigned = true
       }
 
-      this.determineNumericValidations()
+      this.setNumericValidationsFromLocalVariables()
+    },
+    changedStringValidation: function(event) {
+      let newValidation = event.target.value;
+      console.info("changed string validation to " + newValidation)
+
+      this.isNoRestrictionsSelected = false
+      this.isAlphanumericSelected = false
+      this.isEmailAddressSelected = false
+      this.isUrlSelected = false
+
+      console.info('selected new string validation: ' + newValidation)
+
+      if (newValidation === '-1') {
+        this.isNoRestrictionsSelected = true
+      } else if (newValidation === '10') {
+        this.isEmailAddressSelected = true
+      } else if (newValidation === '21') {
+        this.isAlphanumericSelected = true
+      } else if (newValidation === '9') {
+        this.isUrlSelected = true
+      }
+
+      this.setStringValidationsFromLocalVariables()
     },
     clickRequiredToggle: function () {
       let requiredValidation = DomainFactory.createBashValidationFromType(ValidationTypes.VALUE_REQUIRED)
