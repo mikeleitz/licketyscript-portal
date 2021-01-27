@@ -672,12 +672,14 @@ export default {
         this.isTypeSwitch = false
         this.isTypeOther = false
 
+        this.lowerBound = ''
+        this.upperBound = ''
+
         this.removeAllValidations()
 
         this.selectedBashArg.type = 'number'
 
-        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER))
-        // this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL))
+        this.selectedBashArg.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER))
       } else if (type === 'switch' && !this.isTypeSwitch) {
         this.isTypeString = false
         this.isTypeNumber = false
@@ -779,7 +781,41 @@ export default {
       }
     },
     setNumericValidationsFromStoreVariable: function() {
+      this.isRequired = false
+      this.lowerBound = ''
+      this.upperBound = ''
 
+      if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.VALUE_REQUIRED))) {
+        this.isRequired = true
+      }
+
+      if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER))) {
+        this.isInteger = true
+        this.isSigned = true
+      } else if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER))) {
+        this.isInteger = true
+        this.isSigned = false
+      } else if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL))) {
+        this.isInteger = false
+        this.isSigned = true
+      } else if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL))) {
+        this.isInteger = false
+        this.isSigned = false
+      }
+
+      if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN_EQUAL))) {
+        let boundValidationIndex = this.selectedBashArg.getValidationIndex(DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN_EQUAL));
+        let boundValue = this.selectedBashArg.validations[boundValidationIndex]
+
+        this.lowerBound = boundValue.args[0].value
+      }
+
+      if (this.selectedBashArg.hasValidation(DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN_EQUAL))) {
+        let boundValidationIndex = this.selectedBashArg.getValidationIndex(DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN_EQUAL));
+        let boundValue = this.selectedBashArg.validations[boundValidationIndex]
+
+        this.upperBound = boundValue.args[0].value
+      }
     },
     setBooleanValidationsFromStoreVariable: function() {
 
