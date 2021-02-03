@@ -24,13 +24,3 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
-# Deploy to google cloud
-
-```
-docker pull leadtechnologist.registry.jetbrains.space/p/lsc/leadtechnologist-containers/licketyscript-portal:0.8
-
-docker tag leadtechnologist.registry.jetbrains.space/p/lsc/leadtechnologist-containers/licketyscript-portal:0.8 gcr.io/lickety-script/licketyscript-portal:0.8
-
-docker push gcr.io/lickety-script/licketyscript-portal:0.8
-
-```
