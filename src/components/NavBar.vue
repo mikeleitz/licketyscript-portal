@@ -13,7 +13,7 @@
 
       <div class="flex-shrink-0 flex items-center ml-20">
         <!-- TODO PUT APPLICATION ICON HERE -->
-        <h1 class="text-lg text-green-600">-- Coming Soon --</h1>
+        <h1 class="text-lg text-blue-600">-- Now in BETA! --</h1>
       </div>
     </div>
 

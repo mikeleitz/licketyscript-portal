@@ -62,10 +62,10 @@
               </ul>
               <p>These are basic features and it's a struggle to implement them for even the most basic of scripts.</p>
               <h2>Enter Lickety Script</h2>
-              <p>It's a framework that allows you to get right to work on the custom part of your script. All input
+              <p>It's a framework that allows you to get right to work on parts of your script that matter.  All input
                 handling is taken care of. All help text is created for you.</p>
-              <p>Just write the part of the script that matters to you. When the script's execution gets to your code,
-                all inputs will be parsed, validated, and ready to go.</p>
+              <p>Simply write the part of the script that you need executed. When the script's execution gets to your code,
+                all inputs will be parsed, validated, and ready to go!</p>
             </div>
           </div>
         </div>
