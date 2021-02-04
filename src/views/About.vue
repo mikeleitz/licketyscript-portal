@@ -67,6 +67,19 @@
               <p>Simply write the part of the script that you need executed. When the script's execution gets to your code,
                 all inputs will be parsed, validated, and ready to go!</p>
             </div>
+            <div class="mt-6 prose prose-indigo prose-lg text-gray-500 mx-auto">
+              <h2>Want to Help Out?</h2>
+              <p>Help make Lickety Script better by logging issues and feature requests in the github repositories.</p>
+              <p><a href="https://github.com/mikeleitz/licketyscript-quarkus-service">Lickety-Script backend service</a></p>
+              <p><a href="https://github.com/mikeleitz/licketyscript-portal">Lickety-Script user interface</a></p>
+            </div>
+            <div class="mt-6 prose prose-indigo prose-lg text-gray-500 mx-auto">
+              <h2>Want to Connect?</h2>
+              <p>Hit Mike Leitz up on LinkedIn or Twitter.</p>
+              <p><a href="https://www.linkedin.com/in/mike-leitz">LinkedIn</a></p>
+              <p><a href="https://twitter.com/mleitz1">Twitter</a></p>
+              <p><a href="https://mikeleitz.com">Personal Website</a></p>
+            </div>
           </div>
         </div>
       </main>
