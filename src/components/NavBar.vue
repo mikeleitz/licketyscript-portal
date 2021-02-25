@@ -7,6 +7,7 @@
       </div>
       <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
         <router-link class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" to="/">Home</router-link>
+        <router-link class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" to="/howTo">How To</router-link>
         <router-link class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" to="/licketyScriptApp">Application</router-link>
         <router-link class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" to="/about">About</router-link>
       </div>
