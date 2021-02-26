@@ -52,32 +52,26 @@
               </h1>
             </div>
             <div class="mt-6 prose prose-indigo prose-lg text-gray-500 mx-auto">
-              <p>Lickety Script is a web-based tool designed for developers to expedite the creation of Bash scripts.</p>
-              <ul>
-                <li>How do I specify inputs?</li>
-                <li>How do I parse inputs?</li>
-                <li>How do I validate inputs?</li>
-                <li>How do I create help text?</li>
-              </ul>
-              <p>These are basic features and it's a struggle to implement them for even the most basic of scripts.</p>
-              <h2>Enter Lickety Script</h2>
-              <p>It's a framework that allows you to get right to work on parts of your script that matter.  All input
-                handling is taken care of. All help text is created for you.</p>
+              <h2>Part one : the Lickety Script app</h2>
               <p>Simply write the part of the script that you need executed. When the script's execution gets to your code,
                 all inputs will be parsed, validated, and ready to go!</p>
+
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/01-script-name.png" alt="">
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/02-new-arg-1.png" alt="">
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/03-new-arg-detail-1.png" alt="">
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/04-new-arg-detail-2.png" alt="">
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/05-new-arg-validation-2.png" alt="">
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/06-downloaded-file-2.png" alt="">
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/07-download-zip-list.png" alt="">
+
             </div>
             <div class="mt-6 prose prose-indigo prose-lg text-gray-500 mx-auto">
-              <h2>Want to Help Out?</h2>
+              <h2>Part two : Install the script</h2>
               <p>Help make Lickety Script better by logging issues and feature requests in the github repositories.</p>
-              <p><a href="https://github.com/mikeleitz/licketyscript-quarkus-service">Lickety-Script backend service</a></p>
-              <p><a href="https://github.com/mikeleitz/licketyscript-portal">Lickety-Script user interface</a></p>
             </div>
             <div class="mt-6 prose prose-indigo prose-lg text-gray-500 mx-auto">
-              <h2>Want to Connect?</h2>
+              <h2>Part three : Your code</h2>
               <p>Hit Mike Leitz up on LinkedIn or Twitter.</p>
-              <p><a href="https://www.linkedin.com/in/mike-leitz">LinkedIn</a></p>
-              <p><a href="https://twitter.com/mleitz1">Twitter</a></p>
-              <p><a href="https://mikeleitz.com">Personal Website</a></p>
             </div>
           </div>
         </div>
