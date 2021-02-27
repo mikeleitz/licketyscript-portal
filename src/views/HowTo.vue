@@ -89,7 +89,38 @@
             </div>
             <div class="mt-6 prose pr ose-indigo prose-lg text-gray-500 mx-auto">
               <h2>Part two : Install the script</h2>
-              <p>Help make Lickety Script better by logging issues and feature requests in the github repositories.</p>
+              <p>Once you have the zip file, you can install it on your computer.</p>
+
+              <h3>Unzip and make installer.sh executable</h3>
+              <p>Run the following commands.</p>
+              <ol>
+                <li>unzip add-two-numbers.zip</li>
+                <li>cd add-two-numbers</li>
+                <li>chmod +x installer.sh</li>
+                <li>./installer.sh</li>
+              </ol>
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/07-unzip.png" alt="">
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/08-make-installer-executable.png" alt="">
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/09-install-script.png" alt="">
+
+              <h3>Update your path</h3>
+              <p>The installer puts the files in various subdirectories in $HOME/.lickety-script.</p>
+              <p>Update your $HOME/.bash_profile to include the following lines.</p>
+              <ol>
+                <li>export PATH=$HOME/.lickety-script/bin:$PATH</li>
+                <li>export LICKETY_SCRIPT_HOME=$HOME/.lickety-script/</li>
+              </ol>
+              <p>Reload your shell or run 'source $HOME/.bash_profile'</p>
+
+              <h3>Run the script</h3>
+              <p>Run 'add-two-numbers.sh -h'</p>
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/10-run-script-help.png" alt="">
+
+              <p>Test run with arguments.</p>
+              <p>Run with arguments set and in verbose mode: 'add-two-numbers.sh -v --num-one 5 --num-two 3'</p>
+
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/11-script-test-run.png" alt="">
+
             </div>
             <div class="mt-6 prose prose-indigo prose-lg text-gray-500 mx-auto">
               <h2>Part three : Your code</h2>
