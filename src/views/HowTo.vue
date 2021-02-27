@@ -53,19 +53,41 @@
             </div>
             <div class="mt-6 prose prose-indigo prose-lg text-gray-500 mx-auto">
               <h2>Part one : the Lickety Script app</h2>
-              <p>Simply write the part of the script that you need executed. When the script's execution gets to your code,
-                all inputs will be parsed, validated, and ready to go!</p>
+              <p>For part one, you use the Lickety Script application to generate your script.</p>
 
+              <h3>Navigate to Lickety Script</h3>
+              <p>Use the menu to get there.</p>
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/00-application-selected.png" alt="">
+
+              <h3>Enter the script's name</h3>
+              <p>This is the command that will you want to execute on the command line. e.g. my-script.sh. This example script is executed with add-two-numbers.sh. So the name is add-two-numbers.</p>
               <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/01-script-name.png" alt="">
-              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/02-new-arg-1.png" alt="">
-              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/03-new-arg-detail-1.png" alt="">
-              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/04-new-arg-detail-2.png" alt="">
-              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/05-new-arg-validation-2.png" alt="">
-              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/06-downloaded-file-2.png" alt="">
-              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/07-download-zip-list.png" alt="">
 
+              <h3>Enter the script's argument</h3>
+              <p>The script in this example has two args: num-one and num-two.</p>
+
+              <h4>Enter argument num-one and its details</h4>
+              <p>Click the add button to create a new argument.</p>
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/02-new-arg-1.png" alt="">
+
+              <h4>Enter details in the detail section</h4>
+              <p>Change the name to num-one. Add short name as -o and relevant help text. Toggle the validation to required.</p>
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/03-new-arg-detail-1.png" alt="">
+
+
+              <h4>Add argument num-two and enter its details</h4>
+              <p>Click the add button to create a new argument and enter details as before but for num-two. Short name as t, help text, and toggle validation to required.</p>
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/04-new-arg-detail-2.png" alt="">
+
+              <h3>Click the create script button</h3>
+              <p>This will download aa zip file with script framework. This zip file will contain everything you need to install and run your script -- minus your custom code that you haven't written yet</p>
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/05-downloaded-file-2.png" alt="">
+
+              <h3>Inspect the zip file's contents</h3>
+              <p>On Linux/Mac you can run 'unzip -l add-two-numbers.zip' to show you the contents. If yours looks like this, part one is complete. Move to part two. If it doesn't then something is broken and let me know about it <a href="https://twitter.com/mleitz1">on twitter</a></p>
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/06-download-zip-list.png" alt="">
             </div>
-            <div class="mt-6 prose prose-indigo prose-lg text-gray-500 mx-auto">
+            <div class="mt-6 prose pr ose-indigo prose-lg text-gray-500 mx-auto">
               <h2>Part two : Install the script</h2>
               <p>Help make Lickety Script better by logging issues and feature requests in the github repositories.</p>
             </div>
