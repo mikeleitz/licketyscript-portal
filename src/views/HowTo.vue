@@ -123,8 +123,29 @@
 
             </div>
             <div class="mt-6 prose prose-indigo prose-lg text-gray-500 mx-auto">
-              <h2>Part three : Your code</h2>
-              <p>Hit Mike Leitz up on LinkedIn or Twitter.</p>
+              <h2>Part three : Implement</h2>
+
+              <h3>Locate install directory</h3>
+              <p>Go to script's directory in the Lickety Script home directory in : 'cd $HOME/.lickety-script/scripts/add-two-numbers'</p>
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/12-add-two-numbers-directory.png" alt="">
+
+              <h3>Edit main script file</h3>
+              <p>Edit the main script file and add your implementation. In this example we're adding two numbers together and we'll use the Linux command 'bc'.</p>
+              <p>Edit the file with vi or your favorite text editor. 'vi add-two-numbers.sh'</p>
+              <p>Add the line 'bc "$NUM_DASH_ONE_ARG + $NUM_DASH_TWO_ARG"' at the bottom of the add-two-numbers.sh file. Save the file.</p>
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/13-add-addition-logic.png" alt="">
+
+              <h3>Run it!</h3>
+              <p>Give it a test run with 'add-two-numbers.sh -o 6 -t 3' and see the result.</p>
+              <img class="object-cover shadow-lg rounded-lg" src="@/assets/how-to/14-run-it.png" alt="">
+
+              <h3>You're done</h3>
+              <p>You can see how Lickety Script takes care of all the parsing, validation, and help menu creation. It leaves you with the task of the script's implementation.</p>
+              <p>Now you can start experimenting and building your own scripts much faster and easier than before.</p>
+              <p>If you run into any issues or have any questions, please let me know on one of the various channels.</p>
+              <p><a href="https://www.linkedin.com/in/mike-leitz">LinkedIn</a></p>
+              <p><a href="https://twitter.com/mleitz1">Twitter</a></p>
+              <p><a href="https://github.com/mikeleitz/licketyscript-portal">Lickety-Script Github</a></p>
             </div>
           </div>
         </div>
