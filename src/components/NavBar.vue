@@ -5,10 +5,10 @@
         <h1 class="text-lg font-bold">Lickety Script</h1>
       </div>
       <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
-        <router-link class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" to="/">Start</router-link>
-        <router-link class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" to="/licketyScriptApp">Create Script</router-link>
-        <router-link class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" to="/howTo">How To</router-link>
-        <router-link class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" to="/about">About</router-link>
+        <a class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" href="https://licketyscript.app">Start</a>
+        <a class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" href="https://ui.licketyscript.app">Create Script</a>
+        <a class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" href="https://licketyscript.app/how-to.html">How To</a>
+        <a class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" href="https://licketyscript.app/about.html">About</a>
       </div>
 
       <div class="flex-shrink-0 flex items-center ml-20">
